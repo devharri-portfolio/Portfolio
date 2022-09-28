@@ -79,3 +79,27 @@ main {
         padding-right: 1.5rem !important;
     }
 }
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+.icon {
+    fill: rgb(112,112,113);
+}
+
+    .icon:hover {
+        fill: rgb(0,0,0);
+    }
