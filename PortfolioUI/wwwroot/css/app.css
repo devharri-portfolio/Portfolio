@@ -4,6 +4,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+
 h1:focus {
     outline: none;
 }
@@ -24,6 +25,7 @@ a, .btn-link {
 
 .content {
     padding-top: 1.1rem;
+    padding-bottom: 4rem;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -100,3 +102,12 @@ a, .btn-link {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
+@media only screen and (max-width: 992px) {
+
+    .navright {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+
+}
