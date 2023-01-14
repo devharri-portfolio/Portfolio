@@ -335,3 +335,20 @@ a, .btn-link {
         padding: 9rem 0;
     }
 }
+
+.footer {
+    border-top: 1px solid #e5e5e5;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    height: 3.5rem;
+}
+
+.icon {
+    fill: rgb(112,112,113);
+}
+
+    .icon:hover {
+        fill: rgb(0,0,0);
+    }

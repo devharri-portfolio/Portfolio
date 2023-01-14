@@ -13,10 +13,6 @@ main {
     min-height: 100vh;
 }
 
-.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
-}
-
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
@@ -60,13 +56,6 @@ main {
         flex-direction: row;
     }
 
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
     .top-row {
         position: sticky;
         top: 0;
@@ -92,21 +81,3 @@ main {
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
-
-.footer {
-    border-top: 1px solid #e5e5e5;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    height: 3.5rem;
-}
-
-.icon {
-    fill: rgb(112,112,113);
-}
-
-    .icon:hover {
-        fill: rgb(0,0,0);
-    }
-
