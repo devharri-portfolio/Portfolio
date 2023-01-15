@@ -21,10 +21,12 @@
     <Content Remove="wwwroot\assets\" />
     <Content Remove="wwwroot\assets\img\" />
     <Content Remove="wwwroot\assets\img\about\" />
+    <Content Remove="wwwroot\assets\img\profilepicture\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\assets\img\" />
     <Folder Include="wwwroot\assets\img\about\" />
+    <Folder Include="wwwroot\assets\img\profilepicture\" />
   </ItemGroup>
 </Project>
