@@ -104,7 +104,7 @@ a, .btn-link {
 
 
 .section-description-box {
-    max-width: 80%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: justify;
@@ -268,6 +268,9 @@ a, .btn-link {
             padding: 0 30px 20px 20px;
             text-align: left;
         }
+    .section-description-box {
+        max-width: 90%;
+    }
 }
 
 @media (min-width: 992px) {
@@ -295,7 +298,7 @@ a, .btn-link {
             padding: 0 20px 20px;
         }
     .section-description-box {
-        max-width: 50%;
+        max-width: 70%;
     }
 }
 
@@ -321,6 +324,9 @@ a, .btn-link {
         .timeline > li.timeline-inverted > .timeline-panel {
             padding: 0 100px 20px 20px;
         }
+    .section-description-box {
+        max-width: 60%;
+    }
 }
 
 .page-section {
