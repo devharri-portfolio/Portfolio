@@ -23,6 +23,7 @@
     <Content Remove="wwwroot\assets\img\about\" />
     <Content Remove="wwwroot\assets\img\profilepicture\" />
     <Content Remove="wwwroot\js\" />
+    <Content Remove="wwwroot\assets\img\profilepicture\profilepic1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
