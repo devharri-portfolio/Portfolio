@@ -121,6 +121,9 @@ a, .btn-link {
         margin-right: 0;
     }
 }
+ul.timeline {
+    margin-bottom: 3rem;
+}
 
 .timeline {
     position: relative;
@@ -185,7 +188,7 @@ a, .btn-link {
             margin-left: 0;
             text-align: center;
             color: white;
-            border: 7px solid #e9ecef;
+            border: 7px solid #e6e6e6;
             border-radius: 100%;
             background-color: #ffc800;
         }
