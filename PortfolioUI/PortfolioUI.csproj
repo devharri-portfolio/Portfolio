@@ -31,5 +31,9 @@
     <Folder Include="wwwroot\assets\img\about\" />
     <Folder Include="wwwroot\assets\img\profilepicture\" />
     <Folder Include="wwwroot\js\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Models\" />
   </ItemGroup>
 </Project>

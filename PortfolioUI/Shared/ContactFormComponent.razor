@@ -1,23 +1,27 @@
-﻿<form class="row justify-content-center">
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using PortfolioUI.Models
+
+<EditForm Model="@contactFormModel" class="row justify-content-center" OnSubmit="@SubmitForm">
+    <input id="TokenContactForm" type="hidden" @bind-value="contactFormModel.Token"/>
     <div class="text-center">
         <p class="text-muted">Want to discuss about something? Love to hear from you, write me a message!</p>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
             <label for="firstNameContactForm" class="form-label">First name</label>
-            <input type="text" class="form-control" id="firstNameContactForm" placeholder="First name" disabled>
+            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName"class="form-control" placeholder="First name" disabled/>
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
             <label for="lastNameContactForm" class="form-label">Last name</label>
-            <input type="text" class="form-control" id="lastNameContactForm" placeholder="Last name" disabled>
+            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" disabled />
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-3">
             <label for="messageContactForm" class="form-label">Message</label>
-            <textarea class="form-control" id="messageContactForm" placeholder="Message" rows="1" disabled></textarea>
+            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" disabled/>
         </div>
     </div>
     <div class="col-md-12">
@@ -25,7 +29,17 @@
             <button type="submit" class="btn btn-primary">Send</button>
         </div>
     </div>
-</form>
+</EditForm>
+
 @code {
+    private ContactFormModel contactFormModel = new();
+
+    private void SubmitForm()
+    {
+        //Send token to Web API for verification 
+        
+        //If returns True, proceed with contact form data
+        //else, do nothing
+    }
 
 }
