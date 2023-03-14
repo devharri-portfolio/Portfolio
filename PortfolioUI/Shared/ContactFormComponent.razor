@@ -1,29 +1,30 @@
-﻿@using Microsoft.AspNetCore.Components.Forms
-@using PortfolioUI.Models
+﻿@using PortfolioUI.Models
 
-<EditForm Model="@contactFormModel" class="row justify-content-center" OnSubmit="@SubmitForm">
-    <input id="TokenContactForm" type="hidden" @bind-value="contactFormModel.Token"/>
+@inject IJSRuntime JSRuntime
+
+<EditForm Model="@contactFormModel" class="row justify-content-center" OnSubmit="@HandleSubmit">
     <div class="text-center">
         <p class="text-muted">Want to discuss about something? Love to hear from you, write me a message!</p>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
-            <label for="firstNameContactForm" class="form-label">First name</label>
-            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName"class="form-control" placeholder="First name" disabled/>
+            <label for="firstNameContactForm" class="form-label mb-0">First name</label>
+            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName" class="form-control" placeholder="First name" />
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
-            <label for="lastNameContactForm" class="form-label">Last name</label>
-            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" disabled />
+            <label for="lastNameContactForm" class="form-label mb-0">Last name</label>
+            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" />
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-3">
-            <label for="messageContactForm" class="form-label">Message</label>
-            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" disabled/>
+            <label for="messageContactForm" class="form-label mb-0">Message</label>
+            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" />
         </div>
     </div>
+    <input id="tokenContactForm" type="hidden" @bind="@contactFormModel.Token" />
     <div class="col-md-12">
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Send</button>
@@ -34,12 +35,24 @@
 @code {
     private ContactFormModel contactFormModel = new();
 
-    private void SubmitForm()
+    //Functions after blazor has rendered all components
+    protected override void OnAfterRender(bool firstRender)
     {
-        //Send token to Web API for verification 
-        
-        //If returns True, proceed with contact form data
-        //else, do nothing
+        // execute conditionally for loading data, otherwise this will load
+        // every time the page refreshes
+        if (firstRender)
+        {
+            // Do work to load page data and set properties
+            JSRuntime.InvokeVoidAsync("runReCaptcha");
+        }
     }
 
+    private void HandleSubmit()
+    {
+        Console.WriteLine(contactFormModel.Token);
+        Console.WriteLine(contactFormModel.FirstName);
+        Console.WriteLine(contactFormModel.LastName);
+        Console.WriteLine(contactFormModel.Message);
+        // Process the form
+    }
 }

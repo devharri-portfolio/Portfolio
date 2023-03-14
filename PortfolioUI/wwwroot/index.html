@@ -17,7 +17,7 @@
     <link href="css/app.css" rel="stylesheet" />
     <link href="PortfolioUI.styles.css" rel="stylesheet" />
 </head>
-<body onload="runReCaptcha();">
+<body>
     <div id="app">
 
         <svg class="loading-progress">
@@ -76,8 +76,10 @@
             grecaptcha.ready(function () {
                 grecaptcha.execute('6Le_kPokAAAAAF_Xg9SPddoFYRIgp-Lr2Mk0b-vr', { action: 'submit' }).then(function (token) {
                     // Add your logic to submit to your backend server here.
-                    console.log(token);
-                    document.getElementById("TokenContactForm").value = token;
+                    var myElement = document.getElementById("tokenContactForm");
+                    myElement.value = token;
+                    var event = new Event('change');
+                    myElement.dispatchEvent(event);
                 });
             });
         };
