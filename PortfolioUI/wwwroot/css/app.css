@@ -413,3 +413,57 @@ ul.timeline {
     color: rgb(10,10,10);
 }
 
+/* Google reCaptcha*/
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+.grecaptcha-text {
+    --bs-text-opacity: 1;
+    color: #646465 !important;
+    font-size: 11px;
+}
+/* Google reCaptcha*/
+
+/* FLIP CARD*/
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 300px;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 295px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    max-height: 295px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card-front {
+    background-color: #bbb;
+    color: black;
+}
+
+.flip-card-back {
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+}
+/* FLIP CARD*/
