@@ -1,6 +1,16 @@
 ﻿@using PortfolioUI.Models
+@using PortfolioUI.Services
 
 @inject IJSRuntime JSRuntime
+@inject GoogleCaptchaService googleCaptchaService
+
+@if (FormSubmitted)
+{
+    <div class="alert alert-@FormSubmitAlert alert-dismissible fade show" role="alert">
+        @FormSubmitText
+        <button type="button" class="btn-close" @onclick="CloseSubmitAlert"></button>
+    </div>
+}
 
 <EditForm Model="@contactFormModel" class="row justify-content-center" OnValidSubmit="@HandleSubmit">
     <DataAnnotationsValidator />
@@ -26,6 +36,7 @@
         </div>
     </div>
     <input id="tokenContactForm" type="hidden" @bind="@contactFormModel.Token" />
+    <ValidationSummary />
     <div class="col-md-12">
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Send</button>
@@ -36,6 +47,10 @@
 @code {
     private ContactFormModel contactFormModel = new();
 
+    bool FormSubmitted = false;
+    string FormSubmitAlert = "danger";
+    string FormSubmitText = "default";
+
     //Functions after blazor has rendered all components
     protected override void OnAfterRender(bool firstRender)
     {
@@ -44,16 +59,55 @@
         if (firstRender)
         {
             // Do work to load page data and set properties
-            JSRuntime.InvokeVoidAsync("runReCaptcha");
+            RunReCaptchaJavascript();
         }
     }
 
-    private void HandleSubmit()
+    private async Task HandleSubmit()
     {
-        Console.WriteLine(contactFormModel.Token);
-        Console.WriteLine(contactFormModel.FirstName);
-        Console.WriteLine(contactFormModel.LastName);
-        Console.WriteLine(contactFormModel.Message);
-        // Process the form
+        //Verify token
+        bool verification = await googleCaptchaService.VerifyToken(contactFormModel.Token);
+
+        if (verification == true)
+        {
+            // Process the form
+
+            //Show form submit alert
+            FormSubmitted = true;
+            FormSubmitAlert = "success";
+            FormSubmitText = "Message on the way. Thank you for your message!";
+
+            //Clear the form
+            ClearForm();
+        }
+        else
+        {
+            //Show form submit alert
+            FormSubmitted = true;
+            FormSubmitAlert = "danger";
+            FormSubmitText = "Ooops something went wrong.. Please refresh the page!";
+
+            //Clear the form
+            ClearForm();
+        }
     }
+
+    private void RunReCaptchaJavascript()
+    {
+        //Run Google reCaptcha JavaScript-function from index.html for getting new Token
+        JSRuntime.InvokeVoidAsync("runReCaptcha");
+    }
+
+    private void ClearForm()
+    {
+        //Clear the form
+        contactFormModel = new();
+        //Get new Token
+        RunReCaptchaJavascript();
+    }
+
+    private void CloseSubmitAlert()
+    {
+        FormSubmitted = false;
+}
 }
