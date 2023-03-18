@@ -20,19 +20,19 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label for="firstNameContactForm" class="form-label mb-0">First name</label>
-            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName" class="form-control" placeholder="First name" />
+            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName" class="form-control" placeholder="First name" disabled/>
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-3">
             <label for="lastNameContactForm" class="form-label mb-0">Last name</label>
-            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" />
+            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" disabled/>
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-3">
             <label for="messageContactForm" class="form-label mb-0">Message</label>
-            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" />
+            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" disabled/>
         </div>
     </div>
     <input id="tokenContactForm" type="hidden" @bind="@contactFormModel.Token" />
