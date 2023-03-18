@@ -13,7 +13,7 @@ public class GoogleCaptchaService
         {
             using (var client = new HttpClient())
             {
-                var url = $"https://localhost:7295/api/recaptcha?token={token}";
+                var url = $"https://harrihonkanenportfolioapi.azurewebsites.net/api/recaptcha?token={token}";
 
                 var httpResult = await client.GetAsync(url);
                 if (httpResult.StatusCode != HttpStatusCode.OK)
