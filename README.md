@@ -7,3 +7,7 @@ Repository information:
 - CSS: Bootstrap v5.1.0
 - Hosted: Azure Static Web App
 - CI/CD: Github workflow
+- Google reCaptcha V3 verification via own ASP.NET Core Web API
+
+Upcoming:
+- Email service 
