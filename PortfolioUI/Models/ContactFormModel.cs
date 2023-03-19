@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 public class ContactFormModel
 {
     [Required]
-    public string? FirstName { get; set; }
+    public string? Name { get; set; }
     [Required]
-    public string? LastName { get; set; }
+    public string? Email { get; set; }
+    [Required]
+    public string? PhoneNumber { get; set; }
     [Required]
     public string? Message { get; set; }
     [Required]

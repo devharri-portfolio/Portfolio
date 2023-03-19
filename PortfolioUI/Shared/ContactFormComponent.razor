@@ -1,5 +1,6 @@
 ﻿@using PortfolioUI.Models
 @using PortfolioUI.Services
+@using System.Collections.Generic;
 
 @inject IJSRuntime JSRuntime
 @inject GoogleCaptchaService googleCaptchaService
@@ -19,20 +20,26 @@
     </div>
     <div class="col-md-6">
         <div class="mb-2">
-            <label for="firstNameContactForm" class="form-label mb-0">First name</label>
-            <InputText id="firstNameContactForm" @bind-Value="contactFormModel.FirstName" class="form-control" placeholder="First name" disabled />
+            <label for="NameContactForm" class="form-label mb-0">Name</label>
+            <InputText id="nameContactForm" @bind-Value="contactFormModel.Name" class="form-control" placeholder="@RandomName" disabled />
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-2">
-            <label for="lastNameContactForm" class="form-label mb-0">Last name</label>
-            <InputText id="lastNameContactForm" @bind-Value="contactFormModel.LastName" class="form-control" placeholder="Last name" disabled />
+            <label for="PhoneNumberContactForm" class="form-label mb-0">Phone number</label>
+            <InputText id="phoneNumberContactForm" @bind-Value="contactFormModel.PhoneNumber" class="form-control" placeholder="+358 401234567" disabled />
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="mb-1">
+            <label for="emailContactForm" class="form-label mb-0">Email</label>
+            <InputText id="emailContactForm" @bind-Value="contactFormModel.Email" class="form-control" placeholder="example@example.com" disabled />
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-1">
             <label for="messageContactForm" class="form-label mb-0">Message</label>
-            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Message" rows="3" disabled />
+            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Type your message here" rows="3" disabled />
         </div>
     </div>
     <input id="tokenContactForm" type="hidden" @bind="@contactFormModel.Token" />
@@ -54,7 +61,7 @@
 
 @code {
     private ContactFormModel contactFormModel = new();
-
+    private string RandomName = "";
     bool FormSubmitted = false;
     string FormSubmitAlert = "danger";
     string FormSubmitText = "default";
@@ -68,6 +75,12 @@
         {
             // Do work to load page data and set properties
             RunReCaptchaJavascript();
+
+            //Pick name example
+            var random = new Random();
+            List<string> list = new List<string>{"Ken Adams", "Regina Phalange", "Clark Kent", "Max Payne", "Viljo Viljonen", "Albus Dumbledore", "Eddie Brock", "Bruce Wayne"};
+            int index = random.Next(list.Count);
+            RandomName = list[index];
         }
     }
 
@@ -117,5 +130,5 @@
     private void CloseSubmitAlert()
     {
         FormSubmitted = false;
-}
+    }
 }
