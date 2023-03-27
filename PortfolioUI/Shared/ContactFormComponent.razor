@@ -1,14 +1,16 @@
 ﻿@using PortfolioUI.Models
-@using PortfolioUI.Services
+@using PortfolioUI.Services.GoogleCaptcha
+@using PortfolioUI.Services.Email 
 @using System.Collections.Generic;
 
 @inject IJSRuntime JSRuntime
-@inject GoogleCaptchaService googleCaptchaService
+@inject IGoogleCaptchaService googleCaptchaService
+@inject IEmailService emailService 
 
 @if (FormSubmitted)
 {
-    <div class="alert alert-@FormSubmitAlert alert-dismissible fade show" role="alert">
-        @FormSubmitText
+    <div class="alert alert-@FormSubmitAlertClass alert-dismissible fade show" role="alert">
+        @FormSubmitAlertText
         <button type="button" class="btn-close" @onclick="CloseSubmitAlert"></button>
     </div>
 }
@@ -21,25 +23,25 @@
     <div class="col-md-6">
         <div class="mb-2">
             <label for="NameContactForm" class="form-label mb-0">Name</label>
-            <InputText id="nameContactForm" @bind-Value="contactFormModel.Name" class="form-control" placeholder="@RandomName" disabled />
+            <InputText id="nameContactForm" @bind-Value="contactFormModel.Name" class="form-control" placeholder="@RandomName"  />
         </div>
     </div>
     <div class="col-md-6">
         <div class="mb-2">
             <label for="PhoneNumberContactForm" class="form-label mb-0">Phone number</label>
-            <InputText id="phoneNumberContactForm" @bind-Value="contactFormModel.PhoneNumber" class="form-control" placeholder="+358 401234567" disabled />
+            <InputText id="phoneNumberContactForm" @bind-Value="contactFormModel.PhoneNumber" class="form-control" placeholder="+358 401234567"  />
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-1">
             <label for="emailContactForm" class="form-label mb-0">Email</label>
-            <InputText id="emailContactForm" @bind-Value="contactFormModel.Email" class="form-control" placeholder="example@example.com" disabled />
+            <InputText id="emailContactForm" @bind-Value="contactFormModel.Email" class="form-control" placeholder="example@example.com"  />
         </div>
     </div>
     <div class="col-md-12">
         <div class="mb-1">
             <label for="messageContactForm" class="form-label mb-0">Message</label>
-            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Type your message here" rows="3" disabled />
+            <InputTextArea id="messageContactForm" @bind-Value="contactFormModel.Message" class="form-control" placeholder="Type your message here" rows="3"  />
         </div>
     </div>
     <input id="tokenContactForm" type="hidden" @bind="@contactFormModel.Token" />
@@ -63,8 +65,8 @@
     private ContactFormModel contactFormModel = new();
     private string RandomName = "";
     bool FormSubmitted = false;
-    string FormSubmitAlert = "danger";
-    string FormSubmitText = "default";
+    string FormSubmitAlertClass = "danger";
+    string FormSubmitAlertText = "default";
 
     //Functions after blazor has rendered all components
     protected override void OnAfterRender(bool firstRender)
@@ -92,21 +94,29 @@
         if (verification == true)
         {
             // Process the form
+            bool emailSent = await emailService.SendEmail(contactFormModel.Name, contactFormModel.PhoneNumber, contactFormModel.Email, contactFormModel.Message);
 
-            //Show form submit alert
-            FormSubmitted = true;
-            FormSubmitAlert = "success";
-            FormSubmitText = "Message on the way. Thank you for your message!";
+            if(emailSent == true)
+            {
+                //Show form submit alert
+                FormSubmitAlert("success", "Message on the way. Thank you for your message!");
 
-            //Clear the form
-            ClearForm();
+                //Clear the form
+                ClearForm();
+            }
+            else
+            {
+                //Show form submit alert
+                FormSubmitAlert("danger", "Ooops something went wrong with email sending.. Please refresh the page!");
+
+                //Clear the form
+                ClearForm();
+            }
         }
         else
         {
             //Show form submit alert
-            FormSubmitted = true;
-            FormSubmitAlert = "danger";
-            FormSubmitText = "Ooops something went wrong.. Please refresh the page!";
+            FormSubmitAlert("danger", "Ooops something went wrong with verification.. Please refresh the page!");
 
             //Clear the form
             ClearForm();
@@ -125,6 +135,14 @@
         contactFormModel = new();
         //Get new Token
         RunReCaptchaJavascript();
+    }
+
+    private void FormSubmitAlert(string alertClass, string alertText)
+    {
+        //Show form submit alert
+        FormSubmitted = true;
+        FormSubmitAlertClass = alertClass;
+        FormSubmitAlertText = alertText;
     }
 
     private void CloseSubmitAlert()
