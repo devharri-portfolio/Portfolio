@@ -63,13 +63,22 @@
 
 @code {
     private ContactFormModel contactFormModel = new();
-    private string RandomName = "";
     bool FormSubmitted = false;
     string FormSubmitAlertClass = "danger";
     string FormSubmitAlertText = "default";
 
+    Random random = new Random();
+    List<string> nameList = new List<string> { "Ken Adams", "Regina Phalange", "Clark Kent", "Max Payne", "Viljo Viljonen", "Albus Dumbledore", "Eddie Brock", "Bruce Wayne", "Mrs. Chanandler Bong" };
+    private string RandomName = "";
+
+    protected override void OnInitialized()
+    {
+        int index = random.Next(nameList.Count);
+        RandomName = nameList[index];
+    }
+
     //Functions after blazor has rendered all components
-    protected override void OnAfterRender(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         // execute conditionally for loading data, otherwise this will load
         // every time the page refreshes
@@ -78,11 +87,11 @@
             // Do work to load page data and set properties
             RunReCaptchaJavascript();
 
-            //Pick name example
-            var random = new Random();
-            List<string> list = new List<string>{"Ken Adams", "Regina Phalange", "Clark Kent", "Max Payne", "Viljo Viljonen", "Albus Dumbledore", "Eddie Brock", "Bruce Wayne"};
-            int index = random.Next(list.Count);
-            RandomName = list[index];
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(115));
+            while(await timer.WaitForNextTickAsync())
+            {
+                RunReCaptchaJavascript();
+            }
         }
     }
 
@@ -133,8 +142,6 @@
     {
         //Clear the form
         contactFormModel = new();
-        //Get new Token
-        RunReCaptchaJavascript();
     }
 
     private void FormSubmitAlert(string alertClass, string alertText)
