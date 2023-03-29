@@ -7,7 +7,7 @@
 @inject IGoogleCaptchaService googleCaptchaService
 @inject IEmailService emailService 
 
-@if (FormSubmitted)
+@if (FormSubmitAlert)
 {
     <div class="alert alert-@FormSubmitAlertClass alert-dismissible fade show" role="alert">
         @FormSubmitAlertText
@@ -55,7 +55,10 @@
     </div>
     <div class="col-md-12">
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="submit" class="btn btn-primary">
+                @if (formSubmitted){<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+                Send
+            </button>
         </div>
     </div>
 
@@ -63,9 +66,10 @@
 
 @code {
     private ContactFormModel contactFormModel = new();
-    bool FormSubmitted = false;
+    bool FormSubmitAlert = false;
     string FormSubmitAlertClass = "danger";
     string FormSubmitAlertText = "default";
+    bool formSubmitted = false;
 
     Random random = new Random();
     List<string> nameList = new List<string> { "Ken Adams", "Regina Phalange", "Clark Kent", "Max Payne", "Viljo Viljonen", "Albus Dumbledore", "Eddie Brock", "Bruce Wayne", "Mrs. Chanandler Bong" };
@@ -97,6 +101,7 @@
 
     private async Task HandleSubmit()
     {
+        formSubmitted = true;
         //Verify token
         bool verification = await googleCaptchaService.VerifyToken(contactFormModel.Token);
 
@@ -108,7 +113,7 @@
             if(emailSent == true)
             {
                 //Show form submit alert
-                FormSubmitAlert("success", "Message on the way. Thank you for your message!");
+                SubmitAlert("success", "Message on the way. Thank you for your message!");
 
                 //Clear the form
                 ClearForm();
@@ -116,7 +121,7 @@
             else
             {
                 //Show form submit alert
-                FormSubmitAlert("danger", "Ooops something went wrong with email sending.. Please refresh the page!");
+                SubmitAlert("danger", "Ooops something went wrong with email sending.. Please refresh the page!");
 
                 //Clear the form
                 ClearForm();
@@ -125,11 +130,12 @@
         else
         {
             //Show form submit alert
-            FormSubmitAlert("danger", "Ooops something went wrong with verification.. Please refresh the page!");
+            SubmitAlert("danger", "Ooops something went wrong with verification.. Please refresh the page!");
 
             //Clear the form
             ClearForm();
         }
+        formSubmitted = false;
     }
 
     private void RunReCaptchaJavascript()
@@ -144,16 +150,16 @@
         contactFormModel = new();
     }
 
-    private void FormSubmitAlert(string alertClass, string alertText)
+    private void SubmitAlert(string alertClass, string alertText)
     {
         //Show form submit alert
-        FormSubmitted = true;
+        FormSubmitAlert = true;
         FormSubmitAlertClass = alertClass;
         FormSubmitAlertText = alertText;
     }
 
     private void CloseSubmitAlert()
     {
-        FormSubmitted = false;
+        FormSubmitAlert = false;
     }
 }
