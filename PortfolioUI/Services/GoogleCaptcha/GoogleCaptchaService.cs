@@ -23,7 +23,7 @@ public class GoogleCaptchaService : IGoogleCaptchaService
                 var url = $"https://harrihonkanenportfolioapi.azurewebsites.net/api/recaptcha?token={token}";
                 //var url = $"https://localhost:7295/api/recaptcha?token={token}";
 
-                client.DefaultRequestHeaders.Add("x-api-key", _config.GetValue<string>("ApiKey")!);
+                client.DefaultRequestHeaders.Add("x-api-key", _config.GetSection("ApiKey").Value);
 
                 var httpResult = await client.GetAsync(url);
                 if (httpResult.StatusCode != HttpStatusCode.OK)
