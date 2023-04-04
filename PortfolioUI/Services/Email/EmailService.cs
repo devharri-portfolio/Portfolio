@@ -37,7 +37,7 @@ public class EmailService : IEmailService
                 Encoding.UTF8,
                 "application/json");
 
-                jsonContent.Headers.Add("x-api-key", _config.GetValue<string>("ApiKey"));
+                jsonContent.Headers.Add("x-api-key", _config.GetValue<string>("ApiKey")!);
 
                 var response = await client.PostAsync(url, jsonContent);
 
