@@ -8,6 +8,12 @@ namespace PortfolioUI.Services.Email;
 
 public class EmailService : IEmailService
 {
+    private readonly IConfiguration _config;
+
+    public EmailService(IConfiguration config)
+    {
+        _config = config;
+    }
     public async Task<bool> SendEmail(string name, string phoneNumber, string email, string message)
     {
 
@@ -30,6 +36,8 @@ public class EmailService : IEmailService
                     }),
                 Encoding.UTF8,
                 "application/json");
+
+                jsonContent.Headers.Add("x-api-key", _config.GetValue<string>("ApiKey"));
 
                 var response = await client.PostAsync(url, jsonContent);
 
