@@ -112,15 +112,19 @@ a, .btn-link {
 }
 
 .contact-form {
-    max-width: 100%;
+    max-width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
 
+.twitter-feed-class {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 /*#about {
     scroll-margin-top: 120px;
 }*/
-
 @media only screen and (max-width: 992px) {
     .navright {
         margin-left: auto;
@@ -243,7 +247,6 @@ ul.timeline {
         margin-bottom: 0;
     }
 
-
 .navbar-brand-mod {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
@@ -253,6 +256,7 @@ ul.timeline {
     white-space: nowrap;
     color: rgba(0,0,0,.55);
 }
+
 @media (min-width: 768px) {
     .timeline:before {
         left: 50%;
@@ -294,6 +298,10 @@ ul.timeline {
     .contact-form {
         max-width: 90%;
     }
+
+    .twitter-feed-class {
+        max-width: 90%;
+    }
 }
 
 @media (min-width: 992px) {
@@ -326,6 +334,11 @@ ul.timeline {
     .contact-form {
         max-width: 70%;
     }
+
+    .twitter-feed-class {
+        max-width: 60%;
+    }
+
     .navbar-brand-mod {
         display: none;
     }
@@ -362,6 +375,10 @@ ul.timeline {
     }
     .contact-form {
         max-width: 60%;
+    }
+
+    .twitter-feed-class {
+        max-width: 50%;
     }
 }
 
